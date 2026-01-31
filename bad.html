@@ -32,7 +32,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             border: 1px solid #ddd;
             width: 100%;
-            max-width: 900px; /* Slightly wider for this form */
+            max-width: 900px; 
         }
 
         .booking-header {
@@ -45,6 +45,7 @@
             color: var(--black);
             font-size: 2.5rem;
             margin-bottom: 10px;
+            line-height: 1.2;
         }
 
         /* Section Dividers */
@@ -100,26 +101,11 @@
             box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
         }
 
-        /* Checkbox & Radio Styling */
-        .checkbox-group {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-        
         /* Declaration List */
         .declaration-list {
             grid-column: span 2;
             background: #f9f9f9;
-color: var(--black); /* This line makes the text black */
+            color: var(--black);
             padding: 20px;
             border-radius: 5px;
             border-left: 4px solid var(--gold);
@@ -127,9 +113,14 @@ color: var(--black); /* This line makes the text black */
 
         .declaration-item {
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+            align-items: flex-start; /* Aligns checkbox to top of text */
+            line-height: 1.4;
+        }
+
+        .declaration-item input {
+            margin-top: 4px; /* Slight adjustment for alignment */
         }
 
         .warning-text {
@@ -161,10 +152,27 @@ color: var(--black); /* This line makes the text black */
             color: var(--white);
         }
 
+        /* --- MOBILE FIXES --- */
         @media (max-width: 768px) {
+            /* Fix Overlap: Increase top padding so header doesn't cover form */
+            .booking-section { 
+                padding-top: 140px; 
+                padding-left: 15px;
+                padding-right: 15px;
+            }
+
+            /* Fix Squashed Content: Reduce internal padding */
+            .booking-wrapper { 
+                padding: 30px 20px; 
+            }
+
+            /* Stack Form Elements */
             .form-grid { grid-template-columns: 1fr; }
-            .form-group.full-width, .form-section-title, .declaration-list { grid-column: span 1; }
-            .booking-section { padding-top: 120px; }
+            .form-group.full-width, .form-section-title, .declaration-list, .warning-text { grid-column: span 1; }
+            
+            /* Smaller Font Sizes for Mobile */
+            .booking-header h1 { font-size: 1.8rem; }
+            .form-section-title { font-size: 1.3rem; }
         }
     </style>
 </head>
@@ -198,7 +206,6 @@ color: var(--black); /* This line makes the text black */
             <a href="calculator.html">Fare Calculator</a>
             <a href="index.html">Home</a>
             <a href="services.html">Services</a>
-
         </div>
     </div>
 
