@@ -174,7 +174,7 @@
         <div class="header-container">
             <a href="index.html" class="brand-container">
                 <img src="logo.jpg" alt="Logo" class="logo-img">
-                <span class="text-logo">LEEDS WHEELCHAIR TAXI</span>
+                <span class="text-logo"> </span>
             </a>
             <div class="header-right">
                 <a href="tel:+447700900123" class="header-phone">
@@ -196,6 +196,7 @@
             <a href="calculator.html">Fare Calculator</a>
 	    <a href="services.html">Services</a>
             <a href="faq.html">FAQ</a>
+            <a href="bad.html" onclick="toggleMenu()">Become A Driver</a>
         </div>
     </div>
 
@@ -265,7 +266,7 @@
     <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
 
     <script>
-        // Header Logic
+        // --- HEADER LOGIC ---
         window.onscroll = function() {
             const header = document.getElementById("main-header");
             if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
@@ -287,25 +288,22 @@
             }
         }
 
-        // --- FREE MAP LOGIC (Leaflet + OSRM + Photon) ---
+        // --- MAP & ROUTING LOGIC ---
         
         // 1. Initialize Map centered on Leeds
         var map = L.map('map').setView([53.8008, -1.5491], 13);
 
-        // 2. Add OpenStreetMap Tiles (The visual map)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
 
-        // Routing Control Variable
         var routingControl = null;
-
-        // Variables to store selected coordinates
         var startCoords = null;
         var endCoords = null;
+        var startMarker = null;
+        var endMarker = null;
 
-        // --- AUTOCOMPLETE LOGIC (Using Photon API) ---
-        
+        // --- UPDATED AUTOCOMPLETE (Using Nominatim for better Postcodes) ---
         function setupAutocomplete(inputId, listId, isStart) {
             const input = document.getElementById(inputId);
             const list = document.getElementById(listId);
@@ -315,35 +313,47 @@
                 clearTimeout(timeout);
                 const query = this.value;
                 
-                if (query.length < 3) {
+                if (query.length < 2) { // Allow shorter searches (e.g. "LS")
                     list.style.display = 'none';
                     return;
                 }
 
-                // Debounce API calls
                 timeout = setTimeout(() => {
-                    // Fetch from Photon API (Free, focused on UK)
-                    fetch(`https://photon.komoot.io/api/?q=${query}&lat=53.8&lon=-1.5&limit=5`) 
+                    // Nominatim API: Smarter with Postcodes
+                    // 'viewbox' keeps results focused on Leeds area
+                    const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=gb&limit=5&viewbox=-1.8,54.0,-1.2,53.5&bounded=0`;
+
+                    fetch(url)
                         .then(response => response.json())
                         .then(data => {
                             list.innerHTML = '';
-                            if (data.features.length > 0) {
+                            if (data.length > 0) {
                                 list.style.display = 'block';
-                                data.features.forEach(feature => {
+                                data.forEach(item => {
                                     const div = document.createElement('div');
                                     div.className = 'suggestion-item';
-                                    // Construct clean address
-                                    const props = feature.properties;
-                                    const address = `${props.name || ''} ${props.city || props.town || ''}, ${props.country || ''}`;
-                                    div.innerText = address;
+                                    
+                                    // Clean up the display name (keep it short)
+                                    div.innerText = item.display_name;
                                     
                                     div.onclick = function() {
-                                        input.value = address;
-                                        const coords = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]);
+                                        input.value = item.display_name;
                                         
-                                        if (isStart) startCoords = coords;
-                                        else endCoords = coords;
+                                        // Save Coordinates
+                                        const coords = L.latLng(item.lat, item.lon);
                                         
+                                        if (isStart) {
+                                            startCoords = coords;
+                                            if (startMarker) map.removeLayer(startMarker);
+                                            startMarker = L.marker(coords).addTo(map).bindPopup("Pickup").openPopup();
+                                        } else {
+                                            endCoords = coords;
+                                            if (endMarker) map.removeLayer(endMarker);
+                                            endMarker = L.marker(coords).addTo(map).bindPopup("Destination").openPopup();
+                                        }
+
+                                        // Center map on selection
+                                        map.setView(coords, 14);
                                         list.style.display = 'none';
                                     };
                                     list.appendChild(div);
@@ -351,8 +361,9 @@
                             } else {
                                 list.style.display = 'none';
                             }
-                        });
-                }, 300);
+                        })
+                        .catch(err => console.error(err));
+                }, 400); // 400ms delay to prevent too many requests
             });
 
             // Close list when clicking outside
@@ -366,44 +377,38 @@
         setupAutocomplete('from-input', 'from-suggestions', true);
         setupAutocomplete('to-input', 'to-suggestions', false);
 
-        // --- CALCULATE ROUTE LOGIC ---
+        // --- CALCULATE ROUTE ---
         function calculateRoute() {
             if (!startCoords || !endCoords) {
-                alert("Please select valid locations from the suggestions list.");
+                alert("Please select both locations from the dropdown list.");
                 return;
             }
 
-            // Remove previous route if exists
+            // Remove previous route
             if (routingControl) {
                 map.removeControl(routingControl);
             }
 
-            // Create new route using OSRM
+            // Draw new route
             routingControl = L.Routing.control({
-                waypoints: [
-                    startCoords,
-                    endCoords
-                ],
+                waypoints: [startCoords, endCoords],
                 routeWhileDragging: false,
-                show: false, // Hide the default instructions box
-                createMarker: function(i, wp, nWps) {
-                    // Custom markers
-                    return L.marker(wp.latLng, {
-                        draggable: false
-                    });
-                }
+                show: false,
+                lineOptions: {
+                    styles: [{color: '#D4AF37', opacity: 0.8, weight: 6}] // Gold Line
+                },
+                createMarker: function() { return null; } // Don't create extra markers, we did that manually
             }).on('routesfound', function(e) {
                 var routes = e.routes;
                 var summary = routes[0].summary;
 
-                // summary.totalDistance is in meters
+                // Math: Meters to KM to Miles
                 const distanceInKm = summary.totalDistance / 1000;
-                
-                // Formula Logic
                 const distanceInMiles = distanceInKm / 1.6;
+
+                // Pricing Formula
                 let billableMiles = distanceInMiles - 1;
                 if (billableMiles < 0) billableMiles = 0;
-
                 const fare = (billableMiles * 2.3) + 5.9;
 
                 // Update UI
@@ -412,12 +417,8 @@
                 document.getElementById("display-miles").innerText = distanceInMiles.toFixed(2) + " miles";
                 document.getElementById("display-fare").innerText = "£" + fare.toFixed(2);
 
-                // Fit map to route
-                /* map.fitBounds will be handled automatically by the plugin */
-
             }).addTo(map);
         }
-
     </script>
 </body>
 </html>

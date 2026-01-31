@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Driver | Leeds Wheelchair Taxi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("p41L1KqP4H0YijtWL");
+        })();
+    </script>
+
+    <style>
+        /* Reuse Booking Page Styles */
+        .booking-section {
+            padding: 150px 5% 80px; 
+            background-color: var(--off-white);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        .booking-wrapper {
+            background: white;
+            padding: 50px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #ddd;
+            width: 100%;
+            max-width: 900px; /* Slightly wider for this form */
+        }
+
+        .booking-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .booking-header h1 {
+            font-family: 'Poppins', serif;
+            color: var(--black);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* Section Dividers */
+        .form-section-title {
+            grid-column: span 2;
+            font-family: 'Poppins', serif;
+            font-size: 1.5rem;
+            color: var(--gold);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-section-title i { font-size: 1.2rem; }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group { margin-bottom: 15px; }
+        .form-group.full-width { grid-column: span 2; }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--black);
+            font-size: 0.95rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: 0.3s;
+            background-color: #fcfcfc;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--gold);
+            background-color: #fff;
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Checkbox & Radio Styling */
+        .checkbox-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        /* Declaration List */
+        .declaration-list {
+            grid-column: span 2;
+            background: #f9f9f9;
+color: var(--black); /* This line makes the text black */
+            padding: 20px;
+            border-radius: 5px;
+            border-left: 4px solid var(--gold);
+        }
+
+        .declaration-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .warning-text {
+            color: #d9534f;
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-top: -10px;
+            margin-bottom: 20px;
+            grid-column: span 2;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background-color: var(--black);
+            color: var(--gold);
+            padding: 18px;
+            border: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--gold);
+            color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full-width, .form-section-title, .declaration-list { grid-column: span 1; }
+            .booking-section { padding-top: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floating-bg"></div>
+
+    <header id="main-header">
+        <div class="header-container">
+            <a href="index.html" class="brand-container">
+                <img src="logo.jpg" alt="Logo" class="logo-img">
+                <span class="text-logo"> </span>
+            </a>
+            <div class="header-right">
+                <a href="tel:+447700900123" class="header-phone">
+                    <i class="fas fa-phone-alt"></i> +44 7700 900123
+                </a>
+                <a href="book-now.html" class="gold-btn">Book Now</a>
+                <div class="menu-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="fullscreen-menu" class="overlay-menu">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">&times;</a>
+        <div class="overlay-content">
+            <a href="bad.html">Join Our Team</a>
+            <a href="book-now.html">Book Now</a>
+            <a href="calculator.html">Fare Calculator</a>
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+
+        </div>
+    </div>
+
+    <section class="booking-section">
+        <div class="booking-wrapper">
+            <div class="booking-header">
+                <h1>Work With Us</h1>
+                <p>Applications open for Hackney Carriage Drivers only.</p>
+            </div>
+
+            <form id="driver-form" class="form-grid">
+                
+                <div class="form-section-title"><i class="fas fa-user"></i> Driver Details</div>
+
+                <div class="form-group full-width">
+                    <label>Full Name</label>
+                    <input type="text" name="from_name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Mobile Number</label>
+                    <input type="tel" name="mobile" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Home Postcode</label>
+                    <input type="text" name="postcode" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Local Licensing Authority</label>
+                    <input type="text" name="authority" class="form-control" placeholder="e.g. Leeds City Council" required>
+                </div>
+
+                <div class="form-section-title"><i class="fas fa-id-card"></i> Hackney Carriage Licence</div>
+
+                <div class="warning-text">* Private Hire licences are not accepted.</div>
+
+                <div class="form-group full-width">
+                    <label>Hackney Carriage Driver Licence Number</label>
+                    <input type="text" name="licence_number" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Issuing Council</label>
+                    <input type="text" name="council" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Licence Expiry Date</label>
+                    <input type="date" name="expiry" class="form-control" required>
+                </div>
+                <div class="form-group full-width">
+                    <label>Years Licensed as Hackney Driver</label>
+                    <input type="number" name="years_active" class="form-control" min="0" required>
+                </div>
+
+                <div class="form-section-title"><i class="fas fa-taxi"></i> Vehicle Details</div>
+
+                <div class="form-group">
+                    <label>Vehicle Registration</label>
+                    <input type="text" name="vehicle_reg" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Make & Model</label>
+                    <input type="text" name="vehicle_model" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Wheelchair Accessible?</label>
+                    <select name="wheelchair" class="form-control">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Roof Sign Installed?</label>
+                    <select name="roof_sign" class="form-control">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+
+                <div class="form-section-title"><i class="fas fa-paperclip"></i> Required Documents</div>
+                <div class="declaration-list">
+                    <p style="margin-bottom: 10px; font-size: 0.9rem;">Please confirm you possess the following original documents (to be shown later):</p>
+                    <label class="declaration-item">
+                        <input type="checkbox" required> Hackney Carriage Driver Badge
+                    </label>
+                    <label class="declaration-item">
+                        <input type="checkbox" required> Hackney Carriage Vehicle Licence
+                    </label>
+                    <label class="declaration-item">
+                        <input type="checkbox" required> Council ID / Badge Photo
+                    </label>
+                    <label class="declaration-item">
+                        <input type="checkbox"> Proof of Address (Optional)
+                    </label>
+                </div>
+
+                <div class="form-section-title"><i class="fas fa-clock"></i> Working Preferences</div>
+
+                <div class="form-group">
+                    <label>Availability</label>
+                    <select name="availability" class="form-control">
+                        <option value="Full-time">Full-time</option>
+                        <option value="Part-time">Part-time</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Preferred Operating Times</label>
+                    <select name="shifts" class="form-control">
+                        <option value="Day">Day</option>
+                        <option value="Night">Night</option>
+                        <option value="Both">Both</option>
+                    </select>
+                </div>
+                <div class="form-group full-width">
+                    <label>Areas You Usually Rank / Work</label>
+                    <input type="text" name="areas" class="form-control" placeholder="e.g. City Centre, Headingley..." required>
+                </div>
+
+                <div class="form-section-title"><i class="fas fa-comment"></i> Additional Information</div>
+                <div class="form-group full-width">
+                    <textarea name="message" class="form-control" placeholder="Any additional notes or questions..."></textarea>
+                </div>
+
+                <div class="form-section-title"><i class="fas fa-check-circle"></i> Declarations</div>
+                <div class="declaration-list">
+                    <label class="declaration-item">
+                        <input type="checkbox" required> I confirm I hold a valid Hackney Carriage licence
+                    </label>
+                    <label class="declaration-item">
+                        <input type="checkbox" required> I agree to licence and badge verification
+                    </label>
+                    <label class="declaration-item">
+                        <input type="checkbox" required> I agree to be contacted regarding my application
+                    </label>
+                </div>
+
+                <div class="form-group full-width">
+                    <button type="submit" class="submit-btn" id="send-btn">Submit Application</button>
+                </div>
+
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-stack">
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt gold-text"></i>
+                    <span>+44 113 000 000</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt gold-text"></i>
+                    <span>Leeds, West Yorkshire, UK</span>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2026 Leeds Wheelchair Taxi.</p>
+    </footer>
+
+    <script>
+        // Header & Menu Logic
+        window.onscroll = function() {
+            const header = document.getElementById("main-header");
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        };
+
+        function toggleMenu() {
+            const menu = document.getElementById("fullscreen-menu");
+            if (menu.style.width === "0%" || menu.style.width === "") {
+                menu.classList.add("active");
+                if (window.innerWidth <= 768) { menu.style.width = "100%"; } 
+                else { menu.style.width = "30%"; }
+            } else {
+                menu.style.width = "0%";
+                menu.classList.remove("active");
+            }
+        }
+
+        // --- EMAILJS SUBMISSION LOGIC ---
+        document.getElementById('driver-form').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            const btn = document.getElementById('send-btn');
+            const originalText = btn.innerText;
+            btn.innerText = 'Submitting...';
+
+            emailjs.sendForm('service_cmjs9ce', 'template_k04usur', this)
+                .then(function() {
+                    btn.innerText = 'Application Sent!';
+                    btn.style.backgroundColor = '#25d366'; 
+                    alert('Thank you! Your application has been submitted successfully.');
+                    document.getElementById('driver-form').reset();
+                    
+                    setTimeout(() => {
+                        btn.innerText = originalText;
+                        btn.style.backgroundColor = ''; 
+                    }, 3000);
+                }, function(error) {
+                    btn.innerText = 'Failed to Send';
+                    btn.style.backgroundColor = 'red';
+                    alert('Error submitting form: ' + JSON.stringify(error));
+                });
+        });
+    </script>
+</body>
+</html>
