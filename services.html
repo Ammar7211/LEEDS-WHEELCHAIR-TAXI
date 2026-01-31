@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services | Leeds Wheelchair Taxi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- Services Page Specific Styles --- */
+        .services-page-section {
+            padding: 150px 5% 100px; /* Clear fixed header */
+            background-color: var(--off-white);
+            min-height: 100vh;
+        }
+
+        .services-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .services-intro h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--black);
+            margin-bottom: 20px;
+        }
+
+        .services-intro p {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Grid Layout */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Interactive Service Card */
+        .service-box {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        /* Hover Effect: Lift & Gold Border */
+        .service-box:hover {
+            transform: translateY(-10px); /* Lifts up */
+            border-color: var(--gold);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15); /* Gold glow shadow */
+        }
+
+        /* Icon Styling */
+        .service-icon {
+            font-size: 3.5rem;
+            color: var(--gold);
+            margin-bottom: 25px;
+            transition: transform 0.4s ease;
+            display: inline-block;
+        }
+
+        .service-box:hover .service-icon {
+            transform: scale(1.1); /* Icon grows slightly on hover */
+        }
+
+        .service-box h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--black);
+            margin-bottom: 15px;
+        }
+
+        .service-box p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* "Read More" Arrow */
+        .service-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--gold);
+            font-weight: 600;
+            text-decoration: none;
+            opacity: 0; /* Hidden by default */
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .service-box:hover .service-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .services-intro h1 { font-size: 2.2rem; }
+            .services-page-section { padding-top: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floating-bg"></div>
+
+    <header id="main-header">
+        <div class="header-container">
+            <a href="index.html" class="brand-container">
+                <img src="logo.jpg" alt="Logo" class="logo-img">
+                <span class="text-logo">LEEDS WHEELCHAIR TAXI</span>
+            </a>
+            <div class="header-right">
+                <a href="tel:+447700900123" class="header-phone">
+                    <i class="fas fa-phone-alt"></i> +44 7700 900123
+                </a>
+                <a href="booknow.html" class="gold-btn">Book Now</a>
+                <div class="menu-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="fullscreen-menu" class="overlay-menu">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">&times;</a>
+        <div class="overlay-content">
+            <a href="book-now.html">Book Now</a>
+            <a href="calculator.html">Fare Calculator</a>
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+    </div>
+
+    <section class="services-page-section">
+        
+        <div class="services-intro">
+            <h1>Premium Accessibility Services</h1>
+            <p>We provide more than just a ride. Our specialized fleet and trained drivers ensure a dignified, safe, and comfortable journey for every passenger, regardless of their mobility needs.</p>
+        </div>
+
+        <div class="services-grid">
+
+            <div class="service-box">
+                <i class="fas fa-hospital-user service-icon"></i>
+                <h3>Medical Appointments</h3>
+                <p>Reliable transfers to hospitals, clinics, and GP appointments. Our drivers assist you from your door to the waiting room if required.</p>
+                <a href="booknow.html" class="service-link">Book This Service <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="service-box">
+                <i class="fas fa-plane-departure service-icon"></i>
+                <h3>Airport Transfers</h3>
+                <p>Start your holiday stress-free. Spacious vehicles for wheelchairs and luggage. We monitor flight times for prompt pickups.</p>
+                <a href="book-now.html" class="service-link">Book This Service <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="service-box">
+                <i class="fas fa-graduation-cap service-icon"></i>
+                <h3>School & Education</h3>
+                <p>DBS-checked drivers providing safe, regular transport for students with special educational needs (SEN) to schools and colleges.</p>
+                <a href="book-now.html" class="service-link">Book This Service <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="service-box">
+                <i class="fas fa-glass-cheers service-icon"></i>
+                <h3>Social & Leisure</h3>
+                <p>Don't miss out on family gatherings, weddings, or days out. We offer flexible booking for all your social engagements.</p>
+                <a href="book-now.html" class="service-link">Book This Service <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="service-box">
+                <i class="fas fa-home service-icon"></i>
+                <h3>Care Home Transfers</h3>
+                <p>Gentle and patient service for elderly passengers moving between care homes or visiting family members.</p>
+                <a href="book-now.html" class="service-link">Book This Service <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+            <div class="service-box">
+                <i class="fas fa-briefcase service-icon"></i>
+                <h3>Corporate Travel</h3>
+                <p>Executive wheelchair-accessible vehicles for business meetings and corporate events, ensuring professionalism at all times.</p>
+                <a href="book-now.html" class="service-link">Book This Service <i class="fas fa-arrow-right"></i></a>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-stack">
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt gold-text"></i>
+                    <span>+44 113 000 000</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt gold-text"></i>
+                    <span>Leeds, West Yorkshire, UK</span>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2026 Leeds Wheelchair Taxi.</p>
+    </footer>
+
+    <script>
+        // Header & Menu Logic
+        window.onscroll = function() {
+            const header = document.getElementById("main-header");
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        };
+
+        function toggleMenu() {
+            const menu = document.getElementById("fullscreen-menu");
+            if (menu.style.width === "0%" || menu.style.width === "") {
+                menu.classList.add("active");
+                if (window.innerWidth <= 768) { menu.style.width = "100%"; } 
+                else { menu.style.width = "30%"; }
+            } else {
+                menu.style.width = "0%";
+                menu.classList.remove("active");
+            }
+        }
+    </script>
+</body>
+</html>

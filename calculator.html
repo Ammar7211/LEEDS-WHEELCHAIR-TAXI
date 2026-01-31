@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fare Calculator | Leeds Wheelchair Taxi</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+
+    <style>
+        /* Calculator Page Specific Styles */
+        .calc-section {
+            padding: 150px 5% 80px; 
+            background-color: var(--off-white);
+            min-height: 100vh;
+        }
+
+        .calc-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Input Side */
+        .calc-inputs {
+            flex: 1;
+            min-width: 350px;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #ddd;
+            position: relative; /* For dropdown positioning */
+        }
+
+        .calc-inputs h2 {
+            font-family: 'Poppins', serif;
+            color: var(--black);
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .input-group { margin-bottom: 20px; position: relative; }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--black);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Autocomplete Dropdown List */
+        .suggestions-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .suggestion-item {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+        }
+
+        .suggestion-item:hover {
+            background-color: var(--off-white);
+            color: var(--gold);
+        }
+
+        .calc-btn {
+            width: 100%;
+            background-color: var(--black);
+            color: var(--gold);
+            padding: 15px;
+            border: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .calc-btn:hover {
+            background-color: var(--gold);
+            color: var(--white);
+        }
+
+        /* Result Box */
+        #result-box {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f9f9f9;
+            border-left: 5px solid var(--gold);
+            display: none; 
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .total-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        /* Map Container */
+        #map {
+            flex: 2;
+            min-width: 350px;
+            height: 600px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 1; /* Keep below header */
+        }
+
+        /* Hide Leaflet Routing Container (The white box on map) */
+        .leaflet-routing-container {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            #map { height: 400px; }
+            .calc-section { padding-top: 120px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floating-bg"></div>
+
+    <header id="main-header">
+        <div class="header-container">
+            <a href="index.html" class="brand-container">
+                <img src="logo.jpg" alt="Logo" class="logo-img">
+                <span class="text-logo">LEEDS WHEELCHAIR TAXI</span>
+            </a>
+            <div class="header-right">
+                <a href="tel:+447700900123" class="header-phone">
+                    <i class="fas fa-phone-alt"></i> +44 7700 900123
+                </a>
+                <a href="booknow.html" class="gold-btn">Book Now</a>
+                <div class="menu-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div id="fullscreen-menu" class="overlay-menu">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">&times;</a>
+        <div class="overlay-content">
+            <a href="index.html">Home</a>
+            <a href="booknow.html">Book Now</a>
+            <a href="calculator.html">Fare Calculator</a>
+	    <a href="services.html">Services</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+    </div>
+
+    <section class="calc-section">
+        <div class="calc-wrapper">
+            
+            <div class="calc-inputs">
+                <h2>Get a Price Estimate</h2>
+                
+                <div class="input-group">
+                    <label>Pickup Location</label>
+                    <input type="text" id="from-input" class="form-control" placeholder="Start typing (e.g. Leeds Station)" autocomplete="off">
+                    <div id="from-suggestions" class="suggestions-list"></div>
+                </div>
+
+                <div class="input-group">
+                    <label>Destination</label>
+                    <input type="text" id="to-input" class="form-control" placeholder="Start typing (e.g. Manchester)" autocomplete="off">
+                    <div id="to-suggestions" class="suggestions-list"></div>
+                </div>
+
+                <button class="calc-btn" onclick="calculateRoute()">Calculate Quote</button>
+
+                <div id="result-box">
+                    <div class="result-row">
+                        <span>Distance:</span>
+                        <span id="display-distance">0 km</span>
+                    </div>
+                    <div class="result-row">
+                        <span>Distance (Miles):</span>
+                        <span id="display-miles">0 mi</span>
+                    </div>
+                    <div class="result-row total-price">
+                        <span>Est. Fare:</span>
+                        <span id="display-fare">£0.00</span>
+                    </div>
+                    <p style="font-size: 0.8rem; color: #777; margin-top: 10px;">*This is an estimate. Actual price may vary.</p>
+                </div>
+            </div>
+
+            <div id="map"></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="contact-stack">
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt gold-text"></i>
+                    <span>+44 113 000 000</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt gold-text"></i>
+                    <span>Leeds, West Yorkshire, UK</span>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2026 Leeds Wheelchair Taxi.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
+    <script>
+        // Header Logic
+        window.onscroll = function() {
+            const header = document.getElementById("main-header");
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        };
+
+        function toggleMenu() {
+            const menu = document.getElementById("fullscreen-menu");
+            if (menu.style.width === "0%" || menu.style.width === "") {
+                menu.classList.add("active");
+                if (window.innerWidth <= 768) { menu.style.width = "100%"; } 
+                else { menu.style.width = "30%"; }
+            } else {
+                menu.style.width = "0%";
+                menu.classList.remove("active");
+            }
+        }
+
+        // --- FREE MAP LOGIC (Leaflet + OSRM + Photon) ---
+        
+        // 1. Initialize Map centered on Leeds
+        var map = L.map('map').setView([53.8008, -1.5491], 13);
+
+        // 2. Add OpenStreetMap Tiles (The visual map)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Routing Control Variable
+        var routingControl = null;
+
+        // Variables to store selected coordinates
+        var startCoords = null;
+        var endCoords = null;
+
+        // --- AUTOCOMPLETE LOGIC (Using Photon API) ---
+        
+        function setupAutocomplete(inputId, listId, isStart) {
+            const input = document.getElementById(inputId);
+            const list = document.getElementById(listId);
+            let timeout = null;
+
+            input.addEventListener('input', function() {
+                clearTimeout(timeout);
+                const query = this.value;
+                
+                if (query.length < 3) {
+                    list.style.display = 'none';
+                    return;
+                }
+
+                // Debounce API calls
+                timeout = setTimeout(() => {
+                    // Fetch from Photon API (Free, focused on UK)
+                    fetch(`https://photon.komoot.io/api/?q=${query}&lat=53.8&lon=-1.5&limit=5`) 
+                        .then(response => response.json())
+                        .then(data => {
+                            list.innerHTML = '';
+                            if (data.features.length > 0) {
+                                list.style.display = 'block';
+                                data.features.forEach(feature => {
+                                    const div = document.createElement('div');
+                                    div.className = 'suggestion-item';
+                                    // Construct clean address
+                                    const props = feature.properties;
+                                    const address = `${props.name || ''} ${props.city || props.town || ''}, ${props.country || ''}`;
+                                    div.innerText = address;
+                                    
+                                    div.onclick = function() {
+                                        input.value = address;
+                                        const coords = L.latLng(feature.geometry.coordinates[1], feature.geometry.coordinates[0]);
+                                        
+                                        if (isStart) startCoords = coords;
+                                        else endCoords = coords;
+                                        
+                                        list.style.display = 'none';
+                                    };
+                                    list.appendChild(div);
+                                });
+                            } else {
+                                list.style.display = 'none';
+                            }
+                        });
+                }, 300);
+            });
+
+            // Close list when clicking outside
+            document.addEventListener('click', function(e) {
+                if (e.target !== input) {
+                    list.style.display = 'none';
+                }
+            });
+        }
+
+        setupAutocomplete('from-input', 'from-suggestions', true);
+        setupAutocomplete('to-input', 'to-suggestions', false);
+
+        // --- CALCULATE ROUTE LOGIC ---
+        function calculateRoute() {
+            if (!startCoords || !endCoords) {
+                alert("Please select valid locations from the suggestions list.");
+                return;
+            }
+
+            // Remove previous route if exists
+            if (routingControl) {
+                map.removeControl(routingControl);
+            }
+
+            // Create new route using OSRM
+            routingControl = L.Routing.control({
+                waypoints: [
+                    startCoords,
+                    endCoords
+                ],
+                routeWhileDragging: false,
+                show: false, // Hide the default instructions box
+                createMarker: function(i, wp, nWps) {
+                    // Custom markers
+                    return L.marker(wp.latLng, {
+                        draggable: false
+                    });
+                }
+            }).on('routesfound', function(e) {
+                var routes = e.routes;
+                var summary = routes[0].summary;
+
+                // summary.totalDistance is in meters
+                const distanceInKm = summary.totalDistance / 1000;
+                
+                // Formula Logic
+                const distanceInMiles = distanceInKm / 1.6;
+                let billableMiles = distanceInMiles - 1;
+                if (billableMiles < 0) billableMiles = 0;
+
+                const fare = (billableMiles * 2.3) + 5.9;
+
+                // Update UI
+                document.getElementById("result-box").style.display = "block";
+                document.getElementById("display-distance").innerText = distanceInKm.toFixed(2) + " km";
+                document.getElementById("display-miles").innerText = distanceInMiles.toFixed(2) + " miles";
+                document.getElementById("display-fare").innerText = "£" + fare.toFixed(2);
+
+                // Fit map to route
+                /* map.fitBounds will be handled automatically by the plugin */
+
+            }).addTo(map);
+        }
+
+    </script>
+</body>
+</html>

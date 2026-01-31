@@ -65,7 +65,7 @@ header.scrolled {
 /* UPDATED: TEXT LOGO STYLING */
 .text-logo {
     font-family: 'Poppins', serif;
-    font-size: 1.1rem; /* Reduced font size (was 1.5rem) */
+    font-size: 0.9rem; /* Reduced font size (was 1.5rem) */
     font-weight: 700;
     color: var(--gold);
     text-decoration: none;
