@@ -1,0 +1,425 @@
+:root {
+    --gold: #D4AF37;       
+    --gold-hover: #bfa34b;
+    --black: #111111;      
+    --dark-grey: #1a1a1a;  
+    --light-grey: #e0e0e0; 
+    --white: #ffffff;
+    --off-white: #f4f4f4;
+}
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: 'Poppins', sans-serif; 
+}
+
+body {
+    background-color: var(--black);
+    color: var(--light-grey);
+    overflow-x: hidden;
+}
+
+/* --- Header Styling --- */
+header {
+    position: fixed;
+    top: 0; 
+    width: 100%;
+    z-index: 2000;
+    transition: all 0.4s ease;
+    background: #ffffff;
+    padding: 15px 0; /* Adjusted slightly for image height */
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+}
+
+header.scrolled {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    padding: 10px 0;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+}
+
+.header-container {
+    padding: 0 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* BRAND CONTAINER: Aligns Image and Text */
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Space between logo and text */
+    text-decoration: none;
+}
+
+/* LOGO IMAGE STYLING */
+.logo-img {
+    height: 50px; /* Adjust height to fit header */
+    width: auto;
+    object-fit: contain;
+}
+
+.text-logo {
+    font-family: 'Poppins', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.header-phone {
+    color: var(--black);
+    text-decoration: none;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+}
+
+.header-phone i { color: var(--gold); }
+
+.gold-btn {
+    background-color: var(--gold);
+    color: var(--white);
+    padding: 10px 25px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 2px;
+    transition: 0.3s;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.gold-btn:hover {
+    background-color: var(--gold-hover);
+    transform: translateY(-2px);
+}
+
+.menu-toggle {
+    color: var(--gold);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.menu-toggle:hover { color: var(--black); }
+
+/* --- Full Screen Overlay Menu --- */
+/* --- Side Menu (Right Drawer) --- */
+.overlay-menu {
+    height: 100%;
+    width: 0; /* Hidden by default */
+    position: fixed;
+    z-index: 3000;
+    top: 0;
+    right: 0; /* Anchor to the RIGHT side */
+    background-color: #111; /* Solid premium black */
+    overflow-x: hidden;
+    transition: 0.5s; /* Smooth slide animation */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -5px 0 30px rgba(0,0,0,0.8); /* Shadow on the left edge */
+}
+
+.overlay-content {
+    text-align: center;
+    width: 100%;
+    opacity: 0; /* Hide content while closing */
+    transition: opacity 0.3s ease;
+    white-space: nowrap; /* Prevent text breaking awkwardly */
+}
+
+/* Show content when menu is open */
+.overlay-menu.active .overlay-content {
+    opacity: 1;
+    transition-delay: 0.2s;
+}
+
+.overlay-menu a {
+    padding: 20px;
+    text-decoration: none;
+    font-size: 2rem; /* Slightly smaller font for side menu */
+    color: var(--white);
+    display: block;
+    transition: 0.3s;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-family: 'Poppins', serif;
+}
+
+.overlay-menu a:hover { color: var(--gold); }
+
+.overlay-menu .closebtn {
+    position: absolute;
+    top: 20px;
+    left: 30px; /* Moved close button to left for better UX in side menu */
+    font-size: 50px;
+    cursor: pointer;
+    color: var(--gold);
+}
+
+/* Mobile Fallback: On small screens, cover 100% or 80% because 30% is too small */
+@media (max-width: 768px) {
+    .overlay-menu a { font-size: 1.5rem; }
+    .overlay-menu .closebtn { left: auto; right: 30px; } /* Reset close btn for mobile */
+}
+
+/* --- Hero Section --- */
+.hero {
+    height: 85vh; 
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.hero-content {
+    width: 100%;
+    padding: 0 10%; 
+}
+
+.hero-text-box h1 {
+    font-family: 'Poppins', sans-serif; 
+    font-weight: 700;
+    font-size: 4rem;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 20px;
+}
+
+.hero-text-box p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    color: #f0f0f0;
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+
+.hero-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border: 2px solid var(--white);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.hero-btn:hover {
+    background: var(--white);
+    color: var(--black);
+}
+
+/* --- Dedicated Floating Text Section --- */
+.ticker-section {
+    background-color: #000; 
+    width: 100%;
+    padding: 30px 0;
+    overflow: hidden;
+    border-bottom: 1px solid #222;
+}
+
+@keyframes floatRightToLeft {
+    0% { transform: translateX(100vw); }
+    100% { transform: translateX(-100%); }
+}
+
+.floating-text {
+    font-family: 'Playfair', serif;
+    font-size: 4rem; 
+    font-weight: 700;
+    color: var(--gold);
+    white-space: nowrap;
+    animation: floatRightToLeft 20s linear infinite; 
+    text-shadow: none;
+    line-height: 1;
+}
+
+/* --- Typography & Spacing --- */
+.gold-text { color: var(--gold); }
+
+.section-padded-title {
+    padding-left: 10%;
+    margin-bottom: 40px;
+    margin-top: 0;
+}
+
+.section-padded-title h2 {
+    font-family: 'Poppins', serif;
+    font-size: 2.5rem;
+    color: var(--white);
+    border-left: 5px solid var(--gold);
+    padding-left: 20px;
+}
+
+/* --- About Section --- */
+.about-section { 
+    padding: 100px 10%; 
+    background: var(--dark-grey); 
+}
+
+.about-content p {
+    text-align: justify;
+    margin-bottom: 20px;
+    line-height: 1.8;
+    color: #ccc; 
+}
+
+.modern-quote {
+    border-left: 4px solid var(--gold);
+    padding: 20px;
+    font-style: italic;
+    background: #222; 
+    color: var(--white);
+    margin-top: 30px;
+    font-family: 'Playfair Display', serif;
+}
+
+/* --- Features (White Theme) --- */
+.features {
+    padding: 80px 0;
+    background: var(--white);
+}
+
+.features .section-padded-title h2 { color: var(--black); }
+
+.feature-grid {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 10%;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.feature-card { 
+    text-align: center; 
+    width: 300px; 
+    padding: 30px; 
+    background: var(--off-white);
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.feature-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.feature-card i {
+    font-size: 3.6rem; 
+    color: var(--gold);
+    margin-bottom: 20px;
+}
+
+.feature-card h3 { 
+    color: var(--black);
+    margin-bottom: 10px; 
+    font-weight: 600;
+}
+
+.feature-card p { color: #555; }
+
+/* --- Reviews --- */
+.reviews {
+    padding: 80px 0;
+    background: var(--dark-grey);
+}
+
+.review-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 25px;
+    padding: 20px 10% 80px;
+    scrollbar-width: none;
+}
+
+.review-scroll::-webkit-scrollbar { display: none; }
+
+.review-card {
+    min-width: 350px;
+    background: var(--black);
+    padding: 40px;
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+
+.review-card p { color: #ccc; font-style: italic; margin-bottom: 15px; }
+.review-card h4 { color: var(--gold); font-family: 'Poppins', serif; }
+.stars { color: var(--gold); margin-bottom: 15px; }
+
+/* --- Footer --- */
+footer {
+    background: #000;
+    border-top: 1px solid #333;
+    padding: 60px 10% 20px;
+    color: var(--white);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.contact-stack { display: flex; flex-direction: column; gap: 20px; }
+.contact-item { display: flex; align-items: center; gap: 15px; }
+.contact-item i { font-size: 1.5rem; color: var(--gold); width: 30px; text-align: center; }
+.social-links a { color: var(--white); font-size: 1.8rem; margin-left: 20px; transition: 0.3s; }
+.social-links a:hover { color: var(--gold); }
+.copyright { background: #000; color: #555; text-align: center; padding-top: 20px; border-top: 1px solid #222; }
+
+/* --- WhatsApp & BG --- */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #25d366;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 3000;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.whatsapp-float:hover { transform: scale(1.05); }
+
+.floating-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.05) 0%, transparent 50%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .header-phone { display: none; }
+    .hero-text-box h1 { font-size: 2.5rem; }
+    .floating-text { font-size: 2.5rem; }
+}
