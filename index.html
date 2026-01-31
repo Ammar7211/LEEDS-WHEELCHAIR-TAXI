@@ -51,7 +51,11 @@
     </section>
 
     <div class="ticker-section">
-        <div class="floating-text">LEEDS WHEELCHAIR TAXI</div>
+        <div class="floating-text">
+            <img src="logo.jpg" class="ticker-logo" alt="Logo">
+            LEEDS WHEELCHAIR TAXI
+            <img src="logo.jpg" class="ticker-logo" alt="Logo">
+        </div>
     </div>
 
     <section class="about-section">
@@ -137,37 +141,34 @@
                 <a href="#"><i class="fab fa-instagram"></i></a>
                 <a href="#"><i class="fab fa-linkedin"></i></a>
             </div>
-        <script>
-    // Scroll Effect for Header
-    window.onscroll = function() {
-        const header = document.getElementById("main-header");
-        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-            header.classList.add("scrolled");
-        } else {
-            header.classList.remove("scrolled");
-        }
-    };
+        </div>
+        <p class="copyright">&copy; 2026 Leeds Wheelchair Taxi.</p>
+    </footer>
 
-    // Updated Side Menu Logic
-    function toggleMenu() {
-        const menu = document.getElementById("fullscreen-menu");
-        
-        // Check if menu is currently closed (width 0 or empty)
-        if (menu.style.width === "0%" || menu.style.width === "") {
-            // OPEN MENU
-            menu.classList.add("active"); // Adds fade-in effect to text
-            
-            if (window.innerWidth <= 768) {
-                menu.style.width = "100%"; /* Full width on Mobile */
+    <script>
+        window.onscroll = function() {
+            const header = document.getElementById("main-header");
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                header.classList.add("scrolled");
             } else {
-                menu.style.width = "30%"; /* 30% width on Desktop */
+                header.classList.remove("scrolled");
             }
-        } else {
-            // CLOSE MENU
-            menu.style.width = "0%";
-            menu.classList.remove("active");
+        };
+
+        function toggleMenu() {
+            const menu = document.getElementById("fullscreen-menu");
+            if (menu.style.width === "0%" || menu.style.width === "") {
+                menu.classList.add("active");
+                if (window.innerWidth <= 768) {
+                    menu.style.width = "100%"; 
+                } else {
+                    menu.style.width = "30%"; 
+                }
+            } else {
+                menu.style.width = "0%";
+                menu.classList.remove("active");
+            }
         }
-    }
-</script>
+    </script>
 </body>
 </html>

@@ -29,7 +29,7 @@ header {
     z-index: 2000;
     transition: all 0.4s ease;
     background: #ffffff;
-    padding: 15px 0; /* Adjusted slightly for image height */
+    padding: 10px 0; /* Reduced padding slightly to balance larger logo */
     border-bottom: 1px solid rgba(212, 175, 55, 0.1);
 }
 
@@ -47,24 +47,25 @@ header.scrolled {
     align-items: center;
 }
 
-/* BRAND CONTAINER: Aligns Image and Text */
+/* BRAND CONTAINER */
 .brand-container {
     display: flex;
     align-items: center;
-    gap: 15px; /* Space between logo and text */
+    gap: 15px; 
     text-decoration: none;
 }
 
-/* LOGO IMAGE STYLING */
+/* UPDATED: LOGO IMAGE STYLING */
 .logo-img {
-    height: 50px; /* Adjust height to fit header */
+    height: 80px; /* Increased size (was 50px) */
     width: auto;
     object-fit: contain;
 }
 
+/* UPDATED: TEXT LOGO STYLING */
 .text-logo {
     font-family: 'Poppins', serif;
-    font-size: 1.5rem;
+    font-size: 1.1rem; /* Reduced font size (was 1.5rem) */
     font-weight: 700;
     color: var(--gold);
     text-decoration: none;
@@ -116,34 +117,32 @@ header.scrolled {
 
 .menu-toggle:hover { color: var(--black); }
 
-/* --- Full Screen Overlay Menu --- */
 /* --- Side Menu (Right Drawer) --- */
 .overlay-menu {
     height: 100%;
-    width: 0; /* Hidden by default */
+    width: 0; 
     position: fixed;
     z-index: 3000;
     top: 0;
-    right: 0; /* Anchor to the RIGHT side */
-    background-color: #111; /* Solid premium black */
+    right: 0; 
+    background-color: #111; 
     overflow-x: hidden;
-    transition: 0.5s; /* Smooth slide animation */
+    transition: 0.5s; 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    box-shadow: -5px 0 30px rgba(0,0,0,0.8); /* Shadow on the left edge */
+    box-shadow: -5px 0 30px rgba(0,0,0,0.8); 
 }
 
 .overlay-content {
     text-align: center;
     width: 100%;
-    opacity: 0; /* Hide content while closing */
+    opacity: 0; 
     transition: opacity 0.3s ease;
-    white-space: nowrap; /* Prevent text breaking awkwardly */
+    white-space: nowrap; 
 }
 
-/* Show content when menu is open */
 .overlay-menu.active .overlay-content {
     opacity: 1;
     transition-delay: 0.2s;
@@ -152,7 +151,7 @@ header.scrolled {
 .overlay-menu a {
     padding: 20px;
     text-decoration: none;
-    font-size: 2rem; /* Slightly smaller font for side menu */
+    font-size: 2rem; 
     color: var(--white);
     display: block;
     transition: 0.3s;
@@ -166,16 +165,15 @@ header.scrolled {
 .overlay-menu .closebtn {
     position: absolute;
     top: 20px;
-    left: 30px; /* Moved close button to left for better UX in side menu */
+    left: 30px; 
     font-size: 50px;
     cursor: pointer;
     color: var(--gold);
 }
 
-/* Mobile Fallback: On small screens, cover 100% or 80% because 30% is too small */
 @media (max-width: 768px) {
     .overlay-menu a { font-size: 1.5rem; }
-    .overlay-menu .closebtn { left: auto; right: 30px; } /* Reset close btn for mobile */
+    .overlay-menu .closebtn { left: auto; right: 30px; } 
 }
 
 /* --- Hero Section --- */
@@ -248,6 +246,16 @@ header.scrolled {
     animation: floatRightToLeft 20s linear infinite; 
     text-shadow: none;
     line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 30px; /* Space between logo and text */
+}
+
+/* NEW: TICKER LOGO STYLING */
+.ticker-logo {
+    height: 70px; /* Match height of text roughly */
+    width: auto;
+    vertical-align: middle;
 }
 
 /* --- Typography & Spacing --- */
