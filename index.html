@@ -7,30 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <style>
-        /* ADDED: CSS to ensure smooth scrolling and hide scrollbars for the reviews */
-        .review-scroll {
-            display: flex;
-            overflow-x: auto;
-            scroll-behavior: smooth; /* Ensures the slide is smooth, not instant */
-            gap: 20px; /* Space between cards */
-            padding: 20px 0;
-            
-            /* Hide scrollbar for Chrome, Safari and Opera */
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        
-        .review-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
-        .review-card {
-            min-width: 300px; /* Ensures cards have consistent width for scrolling */
-            flex-shrink: 0;
-        }
-    </style>
 </head>
 <body>
 
@@ -123,9 +99,9 @@
 
     <section class="reviews">
         <div class="section-padded-title">
-            <h2>Customer Testimonials</h2>
+            <h2>Customer Testimonals</h2>
         </div>
-        <div class="review-scroll" id="reviewContainer">
+        <div class="review-scroll">
             <div class="review-card">
                 <div class="stars">★★★★★</div>
                 <p>"Outstanding wheelchair taxi service in Leeds"</p>
@@ -175,22 +151,21 @@
             <div class="contact-stack">
                 <div class="contact-item">
                     <i class="fas fa-phone-alt gold-text"></i>
-                    <span style="font-size: 1.2rem; font-weight: bold;">+447892808786</span>
+                    <span>+447892808786</span>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt gold-text"></i>
-                    <span style="font-size: 1.2rem; font-weight: bold;">Riva Park, Plateworks House, Coal Rd, Leeds LS14 1PS</span>
+                    <span>Riva Park, Plateworks House, Coal Rd, Leeds LS14 1PS</span>
                 </div>
             </div>
             <div class="social-links">
                 <img src="footer.png" alt="Leeds Wheelchair Taxis Footer Logo" style="max-height: 150px; width: 350px;">
             </div>
-        </div>
+             </div>
         <p class="copyright">&copy; 2026 Leeds Wheelchair Taxis.</p>
     </footer>
 
     <script>
-        // --- EXISTING HEADER & MENU LOGIC ---
         window.onscroll = function() {
             const header = document.getElementById("main-header");
             if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
@@ -214,30 +189,6 @@
                 menu.classList.remove("active");
             }
         }
-
-        // --- NEW: TESTIMONIAL AUTO-SLIDER LOGIC ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const container = document.getElementById('reviewContainer');
-            
-            setInterval(() => {
-                // Determine width of one card + gap (roughly)
-                // We use the first card's width to be precise
-                const firstCard = container.querySelector('.review-card');
-                if(!firstCard) return;
-
-                const cardWidth = firstCard.offsetWidth + 20; // 20 is the gap in CSS
-                
-                // Check if we are at the end of the scroll
-                // Tolerance of 10px to account for browser calculation differences
-                if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
-                    // Reset to start (smoothly)
-                    container.scrollTo({ left: 0, behavior: 'smooth' });
-                } else {
-                    // Scroll right by one card
-                    container.scrollBy({ left: cardWidth, behavior: 'smooth' });
-                }
-            }, 3000); // 3000ms = 3 seconds
-        });
     </script>
 </body>
 </html>
