@@ -8,28 +8,61 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Mobile Header Adjustments */
+        /* --- MOBILE HEADER FIXES --- */
         @media (max-width: 768px) {
-            .header-right {
-                gap: 10px; /* Reduce gap between elements */
+            /* 1. Make Logo Smaller to free up space */
+            .logo-img {
+                max-height: 40px; /* Restrict height */
+                width: auto;
             }
+            .text-logo {
+                display: none; /* Hide logo text if needed to save space */
+            }
+
+            /* 2. Adjust Header Layout */
+            .header-container {
+                padding: 0 10px; /* Reduce side padding */
+            }
+            .header-right {
+                gap: 8px; /* Reduce gap between items */
+            }
+
+            /* 3. Force Phone Number to Show & Fix Color */
             .header-phone {
-                font-size: 0.8rem; /* Smaller phone text */
+                display: flex !important; /* Force it to appear */
+                align-items: center;
+                font-size: 0.75rem; /* Smaller text */
+                color: white; /* Make text WHITE so it's visible on dark bg */
+                background: rgba(0,0,0,0.3); /* Optional: dark bubble for contrast */
+                padding: 4px 8px;
+                border-radius: 4px;
             }
             .header-phone i {
-                font-size: 0.9rem; /* Smaller phone icon */
+                font-size: 0.8rem;
+                margin-right: 5px;
+                color: #D4AF37; /* Gold Icon */
             }
+            .header-phone span {
+                display: inline-block !important; /* Force text to show */
+            }
+
+            /* 4. Shrink "Book Now" Button */
             .gold-btn {
-                padding: 8px 12px; /* Smaller button padding */
-                font-size: 0.8rem; /* Smaller button text */
+                padding: 6px 10px; /* Smaller padding */
+                font-size: 0.75rem; /* Smaller font */
+                white-space: nowrap; /* Prevent text wrapping */
             }
-             /* Optional: Hide the text part of the phone number on VERY small screens if needed, 
-                uncomment below to just show icon */
-            /* @media (max-width: 380px) {
-                .header-phone span { display: none; }
-                .header-phone i { font-size: 1.2rem; }
-            } 
-            */
+            
+            /* 5. Adjust Menu Icon */
+            .menu-toggle {
+                font-size: 1.2rem;
+            }
+        }
+        
+        /* Ensure phone text turns black when header becomes white (scrolled) */
+        header.scrolled .header-phone {
+            color: black;
+            background: transparent;
         }
     </style>
 </head>
@@ -48,7 +81,9 @@
                 <a href="tel:+447892808786" class="header-phone">
                     <i class="fas fa-phone-alt"></i> <span>+447892808786</span>
                 </a>
+                
                 <a href="booknow.html" class="gold-btn">Book Now</a>
+                
                 <div class="menu-toggle" onclick="toggleMenu()">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -124,9 +159,9 @@
 
     <section class="reviews">
         <div class="section-padded-title">
-            <h2>Customer Testimonals</h2>
+            <h2>Customer Testimonials</h2>
         </div>
-        <div class="review-scroll">
+        <div class="review-scroll" id="reviewContainer">
             <div class="review-card">
                 <div class="stars">★★★★★</div>
                 <p>"Outstanding wheelchair taxi service in Leeds"</p>
@@ -176,21 +211,22 @@
             <div class="contact-stack">
                 <div class="contact-item">
                     <i class="fas fa-phone-alt gold-text"></i>
-                    <span>+447892808786</span>
+                    <span style="font-size: 1.2rem; font-weight: bold;">+447892808786</span>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt gold-text"></i>
-                    <span>Riva Park, Plateworks House, Coal Rd, Leeds LS14 1PS</span>
+                    <span style="font-size: 1.2rem; font-weight: bold;">Riva Park, Plateworks House, Coal Rd, Leeds LS14 1PS</span>
                 </div>
             </div>
             <div class="social-links">
                 <img src="footer.png" alt="Leeds Wheelchair Taxis Footer Logo" style="max-height: 150px; width: 350px;">
             </div>
-             </div>
+        </div>
         <p class="copyright">&copy; 2026 Leeds Wheelchair Taxis.</p>
     </footer>
 
     <script>
+        // Header Scroll Effect
         window.onscroll = function() {
             const header = document.getElementById("main-header");
             if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
@@ -200,6 +236,7 @@
             }
         };
 
+        // Menu Toggle
         function toggleMenu() {
             const menu = document.getElementById("fullscreen-menu");
             if (menu.style.width === "0%" || menu.style.width === "") {
@@ -214,6 +251,22 @@
                 menu.classList.remove("active");
             }
         }
+
+        // Testimonial Auto-Slider
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('reviewContainer');
+            setInterval(() => {
+                const firstCard = container.querySelector('.review-card');
+                if(!firstCard) return;
+                const cardWidth = firstCard.offsetWidth + 20;
+                
+                if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+                    container.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    container.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                }
+            }, 3000);
+        });
     </script>
 </body>
 </html>
