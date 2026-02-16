@@ -12,50 +12,51 @@
         @media (max-width: 768px) {
             /* 1. Make Logo Smaller to free up space */
             .logo-img {
-                max-height: 40px; /* Restrict height */
+                max-height: 40px; 
                 width: auto;
             }
             .text-logo {
-                display: none; /* Hide logo text if needed to save space */
+                display: none; 
             }
 
             /* 2. Adjust Header Layout */
             .header-container {
-                padding: 0 10px; /* Reduce side padding */
+                padding: 0 10px; 
             }
             .header-right {
-                gap: 8px; /* Reduce gap between items */
+                gap: 5px; /* Tighter gap to allow bigger button */
             }
 
-            /* 3. Force Phone Number to Show & Fix Color */
+            /* 3. Force Phone Number to Show */
             .header-phone {
-                display: flex !important; /* Force it to appear */
+                display: flex !important; 
                 align-items: center;
-                font-size: 0.75rem; /* Smaller text */
-                color: white; /* Make text WHITE so it's visible on dark bg */
-                background: rgba(0,0,0,0.3); /* Optional: dark bubble for contrast */
-                padding: 4px 8px;
+                font-size: 0.7rem; /* Slightly smaller to make room for button */
+                color: white; 
+                background: rgba(0,0,0,0.3); 
+                padding: 6px 8px;
                 border-radius: 4px;
             }
             .header-phone i {
                 font-size: 0.8rem;
                 margin-right: 5px;
-                color: #D4AF37; /* Gold Icon */
+                color: #D4AF37; 
             }
             .header-phone span {
-                display: inline-block !important; /* Force text to show */
+                display: inline-block !important; 
             }
 
-            /* 4. Shrink "Book Now" Button */
+            /* 4. INCREASED "Book Now" Button Size */
             .gold-btn {
-                padding: 6px 10px; /* Smaller padding */
-                font-size: 0.75rem; /* Smaller font */
-                white-space: nowrap; /* Prevent text wrapping */
+                padding: 8px 14px; /* Increased padding */
+                font-size: 0.85rem; /* Increased font size */
+                white-space: nowrap; 
             }
             
             /* 5. Adjust Menu Icon */
             .menu-toggle {
-                font-size: 1.2rem;
+                font-size: 1.3rem;
+                margin-left: 5px;
             }
         }
         
@@ -211,11 +212,11 @@
             <div class="contact-stack">
                 <div class="contact-item">
                     <i class="fas fa-phone-alt gold-text"></i>
-                    <span style="font-size: 1.2rem; font-weight: bold;">+447892808786</span>
+                    <span style="font-size: 1rem;">+447892808786</span>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt gold-text"></i>
-                    <span style="font-size: 1.2rem; font-weight: bold;">Riva Park, Plateworks House, Coal Rd, Leeds LS14 1PS</span>
+                    <span style="font-size: 1rem;">Riva Park, Plateworks House, Coal Rd, Leeds LS14 1PS</span>
                 </div>
             </div>
             <div class="social-links">
