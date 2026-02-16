@@ -10,9 +10,9 @@
     <style>
         /* --- MOBILE HEADER FIXES --- */
         @media (max-width: 768px) {
-            /* 1. Make Logo Smaller to free up space */
+            /* 1. Make Logo Smaller to free up space for two buttons */
             .logo-img {
-                max-height: 80px; 
+                max-height: 70px; /* Reduced to fit everything nicely */
                 width: auto;
             }
             .text-logo {
@@ -24,46 +24,21 @@
                 padding: 0 10px; 
             }
             .header-right {
-                gap: 5px; /* Tighter gap to allow bigger button */
+                gap: 8px; /* Gap between the two buttons */
             }
 
-            /* 3. Force Phone Number to Show */
-            .header-phone {
-                display: flex !important; 
-                align-items: center;
-                font-size: 0.7rem; /* Slightly smaller to make room for button */
-                color: white; 
-                background: rgba(0,0,0,0.3); 
-                padding: 6px 8px;
-                border-radius: 4px;
-            }
-            .header-phone i {
-                font-size: 0.8rem;
-                margin-right: 5px;
-                color: #D4AF37; 
-            }
-            .header-phone span {
-                display: inline-block !important; 
-            }
-
-            /* 4. INCREASED "Book Now" Button Size */
+            /* 3. Button Sizing for Mobile */
             .gold-btn {
-                padding: 8px 14px; /* Increased padding */
-                font-size: 0.85rem; /* Increased font size */
+                padding: 8px 12px; 
+                font-size: 0.8rem; 
                 white-space: nowrap; 
             }
             
-            /* 5. Adjust Menu Icon */
+            /* 4. Adjust Menu Icon */
             .menu-toggle {
                 font-size: 1.3rem;
                 margin-left: 5px;
             }
-        }
-        
-        /* Ensure phone text turns black when header becomes white (scrolled) */
-        header.scrolled .header-phone {
-            color: black;
-            background: transparent;
         }
     </style>
 </head>
@@ -79,8 +54,8 @@
             </a>
 
             <div class="header-right">
-                <a href="tel:+447892808786" class="header-phone">
-                    <i class="fas fa-phone-alt"></i> <span>+447892808786</span>
+                <a href="tel:+447892808786" class="gold-btn">
+                    <i class="fas fa-phone-alt"></i> Call Now
                 </a>
                 
                 <a href="booknow.html" class="gold-btn">Book Now</a>
