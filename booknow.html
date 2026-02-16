@@ -3,19 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book a Ride | LEEDS Wheelchair Taxiss</title>
+    <title>Book a Ride | Leeds Wheelchair Taxi</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-
-            emailjs.init("p41L1KqP4H0YijtWL");
-        })();
-    </script>
-
     <style>
         /* Specific Styles for Booking Page */
         .booking-section {
@@ -42,7 +34,7 @@
         }
 
         .booking-header h1 {
-            font-family: 'Poppins', serif;
+            font-family: 'Playfair Display', serif;
             color: var(--black);
             font-size: 2.5rem;
             margin-bottom: 10px;
@@ -95,8 +87,8 @@
 
         .submit-btn {
             width: 100%;
-            background-color: var(--black);
-            color: var(--gold);
+            background-color: #25D366; /* WhatsApp Green */
+            color: white;
             padding: 18px;
             border: none;
             font-weight: bold;
@@ -107,11 +99,14 @@
             border-radius: 5px;
             letter-spacing: 1px;
             margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .submit-btn:hover {
-            background-color: var(--gold);
-            color: var(--white);
+            background-color: #128C7E; /* Darker WhatsApp Green */
             transform: translateY(-2px);
         }
 
@@ -135,9 +130,9 @@
             </a>
             <div class="header-right">
                 <a href="tel:+447892808786" class="header-phone">
-                    <i class="fas fa-phone-alt"></i> +44 7700 900123
+                    <i class="fas fa-phone-alt"></i> +447892808786
                 </a>
-                <a href="booknow.html" class="gold-btn">Book Now</a>
+                <a href="book-now.html" class="gold-btn">Book Now</a>
                 <div class="menu-toggle" onclick="toggleMenu()">
                     <i class="fas fa-bars"></i>
                 </div>
@@ -148,11 +143,10 @@
     <div id="fullscreen-menu" class="overlay-menu">
         <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">&times;</a>
         <div class="overlay-content">
-            <a href="booknow.html">Book Now</a>
-            <a href="calculator.html">Fare Calculator</a>
-            <a href="index.html">Home</a>
-            <a href="services.html">Services</a>
-            <a href="faq.html">FAQ</a>
+            <a href="booknow.html" onclick="toggleMenu()">Book Now</a>
+            <a href="calculator.html" onclick="toggleMenu()">Fare Calculator</a>
+            <a href="services.html" onclick="toggleMenu()">Services</a>
+            <a href="faq.html" onclick="toggleMenu()">FAQ</a>
             <a href="bad.html" onclick="toggleMenu()">Become A Driver</a>
         </div>
     </div>
@@ -161,43 +155,45 @@
         <div class="booking-wrapper">
             <div class="booking-header">
                 <h1>Book Your Journey</h1>
-                <p>Fill in the details below to request a wheelchair-accessible taxi.</p>
+                <p>Fill in the details below to send your booking request directly via WhatsApp.</p>
             </div>
 
             <form id="contact-form" class="form-grid">
                 
                 <div class="form-group full-width">
                     <label>Full Name</label>
-                    <input type="text" name="from_name" class="form-control" placeholder="Enter your full name" required>
+                    <input type="text" id="name" class="form-control" placeholder="Enter your full name" required>
                 </div>
 
                 <div class="form-group">
                     <label>Contact Number</label>
-                    <input type="tel" name="contact" class="form-control" placeholder="+44 7700 900000" required>
+                    <input type="tel" id="contact" class="form-control" placeholder="+44 7700 900000" required>
                 </div>
 
                 <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" name="email" class="form-control" placeholder="example@mail.com" required>
+                    <label>Date & Time</label>
+                    <input type="datetime-local" id="datetime" class="form-control" required>
                 </div>
 
                 <div class="form-group full-width">
                     <label>Pickup Location</label>
-                    <input type="text" name="pickup" class="form-control" placeholder="e.g. Leeds Train Station" required>
+                    <input type="text" id="pickup" class="form-control" placeholder="e.g. Leeds Train Station" required>
                 </div>
 
                 <div class="form-group full-width">
                     <label>Destination (Arrival)</label>
-                    <input type="text" name="destination" class="form-control" placeholder="e.g. Leeds General Infirmary" required>
+                    <input type="text" id="destination" class="form-control" placeholder="e.g. Leeds General Infirmary" required>
                 </div>
 
                 <div class="form-group full-width">
                     <label>Additional Notes (Optional)</label>
-                    <textarea name="message" class="form-control" placeholder="Any specific requirements? (e.g. Type of wheelchair, luggage, time of pickup)"></textarea>
+                    <textarea id="message" class="form-control" placeholder="Any specific requirements? (e.g. Type of wheelchair, luggage)"></textarea>
                 </div>
 
                 <div class="form-group full-width">
-                    <button type="submit" class="submit-btn" id="send-button">Send Booking Request</button>
+                    <button type="submit" class="submit-btn" id="send-button">
+                        <i class="fab fa-whatsapp"></i> Send Request on WhatsApp
+                    </button>
                 </div>
 
             </form>
@@ -209,18 +205,18 @@
             <div class="contact-stack">
                 <div class="contact-item">
                     <i class="fas fa-phone-alt gold-text"></i>
-                    <span>+447892808786</span>
+                    <span style="font-size: 1.2rem; font-weight: bold;">+447892808786</span>
                 </div>
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt gold-text"></i>
-                    <span>Riva Park, Plateworks House, Coal Rd, Leeds LS14 1PS</span>
+                    <span style="font-size: 1.2rem; font-weight: bold;">Riva Park, Plateworks House, Coal Rd, Leeds LS14 1PS</span>
                 </div>
             </div>
             <div class="social-links">
                 <img src="footer.png" alt="Leeds Wheelchair Taxis Footer Logo" style="max-height: 150px; width: 350px;">
             </div>
         </div>
-        <p class="copyright">&copy; 2026 LEEDS Wheelchair Taxiss.</p>
+        <p class="copyright">&copy; 2026 Leeds Wheelchair Taxis.</p>
     </footer>
 
     <script>
@@ -246,32 +242,35 @@
             }
         }
 
-        // --- EMAILJS SUBMISSION LOGIC ---
+        // --- CLEAN WHATSAPP SUBMISSION LOGIC ---
         document.getElementById('contact-form').addEventListener('submit', function(event) {
             event.preventDefault(); 
 
-            const btn = document.getElementById('send-button');
-            const originalText = btn.innerText;
-            btn.innerText = 'Sending...';
+            // 1. Get Values
+            var name = document.getElementById('name').value;
+            var contact = document.getElementById('contact').value;
+            var datetime = document.getElementById('datetime').value;
+            var pickup = document.getElementById('pickup').value;
+            var destination = document.getElementById('destination').value;
+            var note = document.getElementById('message').value;
 
-            // SEND EMAIL (UPDATED Service ID, Existing Template ID)
-            emailjs.sendForm('service_cmjs9ce', 'template_zb0k96a', this)
-                .then(function() {
-                    btn.innerText = 'Sent Successfully!';
-                    btn.style.backgroundColor = '#25d366'; 
-                    alert('Your booking request has been sent! We will contact you shortly.');
-                    document.getElementById('contact-form').reset();
-                    
-                    setTimeout(() => {
-                        btn.innerText = originalText;
-                        btn.style.backgroundColor = ''; 
-                    }, 3000);
-                }, function(error) {
-                    btn.innerText = 'Failed to Send';
-                    btn.style.backgroundColor = 'red';
-                    alert('Failed to send message: ' + JSON.stringify(error));
-                    console.log('FAILED...', error);
-                });
+            // 2. Format the WhatsApp Message (No Emojis, No Bold)
+            // %0a creates a new line
+            var whatsappMessage = 
+                "New Booking Request" + "%0a%0a" +
+                "Name: " + name + "%0a" +
+                "Contact: " + contact + "%0a" +
+                "Date/Time: " + datetime + "%0a" +
+                "Pickup: " + pickup + "%0a" +
+                "Destination: " + destination + "%0a" +
+                "Notes: " + (note ? note : "None");
+
+            // 3. Construct the URL
+            // Using your number: 447892808786
+            var url = "https://wa.me/447892808786?text=" + whatsappMessage;
+
+            // 4. Open WhatsApp
+            window.open(url, '_blank').focus();
         });
     </script>
 </body>

@@ -7,6 +7,31 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Mobile Header Adjustments */
+        @media (max-width: 768px) {
+            .header-right {
+                gap: 10px; /* Reduce gap between elements */
+            }
+            .header-phone {
+                font-size: 0.8rem; /* Smaller phone text */
+            }
+            .header-phone i {
+                font-size: 0.9rem; /* Smaller phone icon */
+            }
+            .gold-btn {
+                padding: 8px 12px; /* Smaller button padding */
+                font-size: 0.8rem; /* Smaller button text */
+            }
+             /* Optional: Hide the text part of the phone number on VERY small screens if needed, 
+                uncomment below to just show icon */
+            /* @media (max-width: 380px) {
+                .header-phone span { display: none; }
+                .header-phone i { font-size: 1.2rem; }
+            } 
+            */
+        }
+    </style>
 </head>
 <body>
 
@@ -21,7 +46,7 @@
 
             <div class="header-right">
                 <a href="tel:+447892808786" class="header-phone">
-                    <i class="fas fa-phone-alt"></i> +447892808786
+                    <i class="fas fa-phone-alt"></i> <span>+447892808786</span>
                 </a>
                 <a href="booknow.html" class="gold-btn">Book Now</a>
                 <div class="menu-toggle" onclick="toggleMenu()">
